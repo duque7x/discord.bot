@@ -4,7 +4,14 @@ module.exports = class {
    constructor(client) {
       this.client = client;
       this.name = 'help';
-      this.description = 'Embed de ajuda.'
+      this.description = 'Embed de ajuda.';
+      this.options = [
+         {
+            name: "file",
+            type: 11,
+            description: 'A file'
+         }
+      ]
    }
    /**
     * 
@@ -27,5 +34,6 @@ module.exports = class {
          .setFooter({text: "This is the footer text, it can hold 2048 characters", iconURL: "http://i.imgur.com/w1vhFSR.png"});
 
       interaction.reply({ embeds: [embed], ephemeral: true });
+      console.log(interaction.options.data[0].type);
    }
 }

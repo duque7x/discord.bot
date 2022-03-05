@@ -10,6 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^13.6.0"
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/rest": "^0.3.0",
+    "@discordjs/voice": "^0.8.0",
+    "@josue7/database": "^1.0.4",
+    "discord-player": "^5.2.2",
+    "discord.js": "^13.6.0",
+    "ytdl-core": "^4.10.1"
   }
 }

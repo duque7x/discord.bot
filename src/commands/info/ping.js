@@ -4,7 +4,8 @@ module.exports = class {
    constructor(client) {
       this.client = client;
       this.name = 'ping';
-      this.description = 'Ping do bot'
+      this.description = 'Ping do bot';
+      this.category = 'info'
    }
    /**
     * 

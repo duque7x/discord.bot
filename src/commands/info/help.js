@@ -1,17 +1,23 @@
-const { Interaction, BaseCommandInteraction, MessageEmbed } = require("discord.js");
+const { BaseCommandInteraction, MessageEmbed } = require("discord.js");
+const { Bot } = require("../../structures/Client");
 
 module.exports = class {
+   /**
+    * 
+    * @param {Bot} client 
+    */
    constructor(client) {
       this.client = client;
-      this.name = 'help';
+      this.name = 'ajuda';
       this.description = 'Embed de ajuda.';
       this.options = [
          {
-            name: "file",
-            type: 11,
-            description: 'A file'
+            name: 'comando',
+            description: 'Nome do commando',
+            type: 3
          }
-      ]
+      ];
+      this.category = 'info';
    }
    /**
     * 
@@ -19,21 +25,41 @@ module.exports = class {
     */
    run(interaction) {
       const embed = new MessageEmbed()
-         .setColor('DARK_GREEN')
+         .setColor('AQUA')
          .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
          .setTitle("Embed de ajuda")
-         .setDescription("Embed de ajuda")
-         .addField("This is a single field title, it can hold 256 characters", "This is a field value, it can hold 1024 characters.")
+         .setDescription("Se tiveres com dificuldade em usar os meus comandos digite /help e clique na opção comando e escreva o nome do comando.")
          .addFields(
-            { name: "Inline fields", value: "They can have different fields with small headlines, and you can inline them.", inline: true },
-            { name: "Masked links", value: "You can put [masked links](https://discord.js.org/#/docs/main/master/class/MessageEmbed) inside of rich embeds.", inline: true },
-            { name: "Markdown", value: "You can put all the *usual* **__Markdown__** inside of them.", inline: true }
-         )
-         .addField("\u200b", "\u200b")
-         .setTimestamp()
-         .setFooter({text: "This is the footer text, it can hold 2048 characters", iconURL: "http://i.imgur.com/w1vhFSR.png"});
+            {
+               name: '> Informação 📚',
+               value: `\`\`\`${this.client.commands.filter(i => i.category === 'info').map(o => o.name).join(', ')}\`\`\``
+            },
 
-      interaction.reply({ embeds: [embed], ephemeral: true });
-      console.log(interaction.options.data[0].type);
+         )
+         .setThumbnail(interaction.user.defaultAvatarURL)
+         .setTimestamp();
+
+      if (interaction.options.getString('comando')) {
+         const embed = new MessageEmbed()
+            .setColor('DARK_GOLD')
+            .setAuthor({ name: interaction.user.username, iconURL: interaction.user.displayAvatarURL() })
+            .setTitle("Comando " + interaction.options.getString('comando'))
+            .addFields([
+               {
+                  name: 'Descrição',
+                  value: this.client.commands.find((c) => c.name === interaction.options.getString('comando')).description
+               },
+               {
+                  name: 'Categoria',
+                  value: this.client.commands.find((c) => c.name === interaction.options.getString('comando')).category
+               },
+            ])
+            .setThumbnail(interaction.user.defaultAvatarURL)
+            .setTimestamp();
+         interaction.reply({ embeds: [embed], ephemeral: true });
+         return
+      }
+
+      interaction.reply({ embeds: [embed] });
    }
 }

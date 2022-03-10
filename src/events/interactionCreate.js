@@ -15,13 +15,17 @@ module.exports = class {
     */
    run(interaction) {
       try {
-         this.client.commands.find(i => i.name == interaction.commandName).run(interaction);
+         const command = this.client.commands.find(i => i.name == interaction.commandName);
+
+         if (command.category === "moderation" && !interaction.member.roles.cache.has('949792354259337266')) return interaction.reply({ content: 'Sem permissão para executar o comando.', ephemeral: true});
+         command.run(interaction);
       } catch(o) {
-         interaction.reply({
+         interaction.channel.send({
             content:  `O commando ${interaction.commandName} não foi encontrado!`,
             ephemeral: true,
          });
          console.log(o);
+         process.exit(1);
       }
    }
 }

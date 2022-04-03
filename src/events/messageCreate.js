@@ -16,8 +16,8 @@ module.exports = class {
     */
    async run(message) {
       try {
-         if (message.content.startsWith('http://') || message.content.startsWith('https://') && !message.member.roles.cache.mapValues((v, k) => v.id === '949792354259337266' || v.id === '949792534035582989')) {
-            await message.delete();
+         if (message.content.startsWith('http://') || message.content.startsWith('https://') && !message.member.roles.cache.has(('949792354259337266'))) {
+            return message.delete();
          }
       } catch (o) {
          message.channel.send({

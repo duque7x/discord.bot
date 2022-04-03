@@ -16,7 +16,7 @@ module.exports = class {
     */
    async run(message) {
       try {
-         if (message.content.startsWith('http://') || message.content.startsWith('https://') && !message.member.roles.cache.has(('949792354259337266'))) {
+         if (message.content.startsWith('http://') || message.content.startsWith('https://')) {
             return message.delete();
          }
       } catch (o) {

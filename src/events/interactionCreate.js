@@ -18,7 +18,7 @@ module.exports = class {
          const command = this.client.commands.find(i => i.name == interaction.commandName);
 
          if (command.category === "moderation" && !interaction.member.roles.cache.has('949792354259337266')) return interaction.reply({ content: 'Sem permissão para executar o comando.', ephemeral: true});
-         command.run(interaction);
+         command.run(interaction, this.client);
       } catch(o) {
          interaction.channel.send({
             content:  `O commando ${interaction.commandName} não foi encontrado!`,

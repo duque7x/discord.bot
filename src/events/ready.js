@@ -1,5 +1,6 @@
 const { Client } = require("discord.js");
 const { Bot } = require("../structures/Client");
+const chalk = new (require('chalk').Chalk);
 
 module.exports = class {
    /**
@@ -15,6 +16,6 @@ module.exports = class {
          name: 'Ajudando digite /help',
          type: 'LISTENING',
       });
-      console.log('O bot está on! Com o nome ' + this.client.user.username + ' e com ' + this.client.guilds.cache.size + ' guildas');
+      console.log(chalk.red(`O bot está on! Com o nome ${this.client.user.username} e com ${this.client.guilds.cache.size} guildas`));
    }
 }

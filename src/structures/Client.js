@@ -8,10 +8,12 @@ class Bot extends Client {
    constructor(options) {
       super(options);
       this.commands = new Collection();
-      this.watcher = new Watcher("C:\\Users\\josue\\Documents\\discord.bot", "https://discord.com/api/webhooks/1345525704187445269/ifuLW8Wj1aO8KRIoSYNqUbTxSHi_fUQ10UfO5fRSaVE5TXOpL0LgS6YhsnrkuRSjRtrG")
+      this.watcher = new Watcher("C:\\Users\\josue\\Documents\\discord.bot", "https://discord.com/api/webhooks/1345525704187445269/ifuLW8Wj1aO8KRIoSYNqUbTxSHi_fUQ10UfO5fRSaVE5TXOpL0LgS6YhsnrkuRSjRtrG");
+
       this.loadCommands(__dirname.replace('\\structures', '\\commands'));
       this.loadEvents();
       this.registryCommands(); // Now commands are loaded before registration
+      this.watcher.start();
    }
 
    async registryCommands() {

@@ -21,7 +21,8 @@ module.exports = class {
     */
    async run(interaction, client) {
       // if (interaction.member.roles.has(''))
-      await interaction.channel.bulkDelete(interaction.options.getNumber('quantidade'))
+      await interaction.channel.bulkDelete(interaction.options.getNumber('quantidade'));
+      
       interaction.reply({ content: `${interaction.options.getNumber('quantidade')} mensagens foram apagadas!`, ephemeral: true });
    }
 }

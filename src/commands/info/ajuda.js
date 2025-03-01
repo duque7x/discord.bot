@@ -25,7 +25,7 @@ module.exports = class {
          .setDescription("Se tiveres com dificuldade em usar os meus comandos digite /help e clique na opção comando e escreva o nome do comando.")
          .addFields(
             {
-               name: '> Informação 📚',
+               name: '> Informação',
                value: `${client.commands.filter(i => i.category === 'info').map(o => o.name).join(', ')}`
             },
 

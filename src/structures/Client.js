@@ -8,7 +8,10 @@ class Bot extends Client {
    constructor(options) {
       super(options);
       this.commands = new Collection();
-      this.watcher = new Watcher("C:\\Users\\josue\\Documents\\discord.bot", "https://discord.com/api/webhooks/1345525704187445269/ifuLW8Wj1aO8KRIoSYNqUbTxSHi_fUQ10UfO5fRSaVE5TXOpL0LgS6YhsnrkuRSjRtrG");
+      this.watcher = 
+      new Watcher(
+         "C:\\Users\\josue\\Documents\\discord.bot", 
+         "https://discord.com/api/webhooks/1374633139606913024/IkLTE1shdW8Z5rPasVWWcMY3WE_DZoBz_PJAraEPR5Epq48Qqe8sbRl5kOrbJUHLwnUP");
 
       this.loadCommands(__dirname.replace('\\structures', '\\commands'));
       this.loadEvents();
@@ -26,7 +29,7 @@ class Bot extends Client {
          console.log([...this.commands.values()]);
 
          await rest.put(
-            Routes.applicationGuildCommands("1056957302462238820", "1341399030282059776"),
+            Routes.applicationCommands("1056957302462238820"),
             { body: [...this.commands.values()] }
          );
 

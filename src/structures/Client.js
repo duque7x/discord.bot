@@ -1,22 +1,17 @@
 require("dotenv").config();
 const { readdirSync } = require('fs');
 const { Client, IntentsBitField, REST, Routes, Collection } = require('discord.js');
-const Watcher = require("repo-watcher-discord");
 const token = process.env.DISCORD_TOKEN;
 
 class Bot extends Client {
    constructor(options) {
       super(options);
       this.commands = new Collection();
-      this.watcher = 
-      new Watcher(
-         "C:\\Users\\josue\\Documents\\discord.bot", 
-         "https://discord.com/api/webhooks/1374633139606913024/IkLTE1shdW8Z5rPasVWWcMY3WE_DZoBz_PJAraEPR5Epq48Qqe8sbRl5kOrbJUHLwnUP");
+    
 
       this.loadCommands(__dirname.replace('\\structures', '\\commands'));
       this.loadEvents();
-      this.registryCommands(); // Now commands are loaded before registration
-      this.watcher.start();
+     // this.registryCommands(); // Now commands are loaded before registration
    }
 
    async registryCommands() {
@@ -76,7 +71,9 @@ const client = new Bot({
       IntentsBitField.Flags.MessageContent,
    ]
 });
+console.log({ token });
 
+client.login(token);
 process.on('unhandledRejection', console.log);
 process.on('uncaughtException', console.log);
 

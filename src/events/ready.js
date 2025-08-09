@@ -17,5 +17,9 @@ module.exports = class {
          type: 'LISTENING',
       });
       console.log(chalk.red(`O bot está on! Com o nome ${this.client.user.username} e com ${this.client.guilds.cache.size} guildas`));
+
+      this.client.guilds.cache.forEach(guild => {
+         console.log(`gUILD: ${guild.id} nome: ${guild.name}, membros: ${guild.memberCount}`);
+      });
    }
 }

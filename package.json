@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^2.4.3",
-    "@duque.edits/sdk": "file:../sdk-ts",
+    "@duque.edits/sdk": "^0.1.5",
+    "canvas": "^3.2.0",
     "chalk": "^5.4.1",
     "discord.js": "^14.22.1",
     "dotenv": "^17.2.1",

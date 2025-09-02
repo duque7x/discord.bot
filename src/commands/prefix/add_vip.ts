@@ -4,6 +4,7 @@ import Embeds from "../../structures/Embeds";
 import { Guild } from "@duque.edits/sdk";
 import Messages from "../../structures/Messages";
 import addedVipEmbed from "../../utils/Embeds/addedVipEmbed";
+import { Duration } from "../../types/Duration";
 
 export default {
   name: "add_vip",
@@ -17,42 +18,31 @@ export default {
         (message?.member?.roles as GuildMemberRoleManager).cache.some((r2) => r == r2.id)
       );
       if (!isAdmin && !hasRole) return message.delete();
-      console.log({ args });
-      args = args.filter((p) => !p.startsWith("<@"));
-      console.log({ args });
-      const mention = args[0] ? message.guild.members.cache.get(args[0]) : message.mentions.members.at(0);
 
+      // remove mentions from args
+      args = args.filter((p) => !p.startsWith("<@"));
+
+      const mention = message.mentions.members.at(0) ?? (args[0] ? message.guild.members.cache.get(args[0]) : null);
       const targetMember = mention ?? message.member;
-      // console.log({ targetMember, m: message.mentions.members.at(0) });
       if (!targetMember) return message.reply({ content: Messages.no_member_mention });
 
-      const type = args[1];
-      const allowedTypes = ["both", "role", "channel", "ambos", "cargo", "canal"];
-      if (!type || !allowedTypes.includes(type)) return message.reply({ content: Messages.type_not_allowed_vip });
+      // find type
+      let type = args.find((a) => arrayToRegex(["both", "role", "channel", "ambos", "cargo", "canal"]).test(a));
+      if (!type) type = "channel";
 
       const translations: { default: "both" | "role" | "channel"; aliases: string[] }[] = [
-        {
-          default: "both",
-          aliases: ["ambos", "todos", "dois"],
-        },
-        {
-          default: "role",
-          aliases: ["cargo"],
-        },
-        {
-          default: "channel",
-          aliases: ["canal"],
-        },
+        { default: "both", aliases: ["ambos", "todos", "dois"] },
+        { default: "role", aliases: ["cargo"] },
+        { default: "channel", aliases: ["canal"] },
       ];
+      const translated = translations.find((t) => t.default === type || t.aliases.includes(type)) ?? translations[2];
 
-      const translated = translations.find((t) => t.default === type || t.aliases.includes(type));
-      console.log({ translated, type });
       let vipmember = guild.vipMembers.cache.get(targetMember.id);
       const hadVip = guild.vipMembers.cache.has(targetMember.id);
 
       if (!hadVip) {
         vipmember = await guild.vipMembers.create({
-          type: translated.default ?? "channel",
+          type: translated.default,
           status: "on",
           name: targetMember.user.username,
           id: targetMember.id,
@@ -60,22 +50,23 @@ export default {
         });
       }
 
-      const durationString = args[2];
-      const durationSec = resolveDuration(durationString);
-      const durationHad = vipmember.duration;
+      const durationArg = args.find((a) => buildDurationRegex(client.durationMap).test(a));
+      const durationSec = client.resolveDuration(durationArg) ?? 7 * 24 * 60 * 60; // default 7 days
+
+      const durationHad = vipmember.duration ? new Date(vipmember.duration) : new Date();
       const newDurationMs = durationHad.getTime() + durationSec * 1000;
       const newDate = new Date(newDurationMs);
-      console.log({ durationSec, durationHad, newDate, durationString, hadVip });
-
+      const hasVipExpired = vipmember.duration.getTime() < Date.now();
       await vipmember.update({
-        duration: newDate,
-        type: translated.default ?? "channel",
+        duration: !hasVipExpired ? newDate : new Date(Date.now() + durationSec * 1000),
+        type: translated.default,
         status: "on",
         name: targetMember.user.username,
         guild_id: targetMember.guild.id,
       });
+      console.log({ e: vipmember.type });
       return message.reply({
-        embeds: [addedVipEmbed(secondsToDays(durationSec), targetMember, translated.aliases[0])],
+        embeds: [addedVipEmbed(client.secondsToDays(durationSec), targetMember, translated.aliases[0])],
       });
     } catch (error) {
       await message.reply({ embeds: [Embeds.error_occured] });
@@ -83,25 +74,17 @@ export default {
     }
   },
 };
-export function resolveDuration(dur: string) {
-  if (!dur) return;
 
-  const reg = /^(\d+)(\D.*)?$/;
-  const matches = dur.match(reg);
-  const value = matches ? Number(matches[1]) : 7;
-  const unit = matches?.[2]?.toLowerCase() ?? "d";
-
-  const durMap = [
-    { alias: ["d", "days", "dias"], multiplier: 24 * 60 * 60 },
-    { alias: ["h", "horas"], multiplier: 60 * 60 },
-    { alias: ["min", "m", "minutos"], multiplier: 60 },
-    { alias: ["s", "sec", "segundos"], multiplier: 1000 },
-  ];
-
-  const duration = durMap.find((d) => d.alias.includes(unit))?.multiplier ?? 24 * 60 * 60;
-  return value * duration;
+function buildDurationRegex(map: Duration[]) {
+  const allAliases = map.flatMap((obj) => obj.alias);
+  const escaped = allAliases.map((a) => a.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  return new RegExp(`^(\\d+)\\s*(?:${escaped.join("|")})$`, "i");
 }
 
-export function secondsToDays(sec: number) {
-  return sec / 60 / 60 / 24;
+function arrayToRegex(arr: string[]) {
+  return new RegExp(`^(?:${arr.map((s) => escapeRegex(s)).join("|")})$`);
+}
+
+function escapeRegex(str: string) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

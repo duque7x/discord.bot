@@ -6,15 +6,22 @@ import {
   StringSelectMenuInteraction,
   EmbedBuilder,
   VoiceChannel,
+  Message,
+  User,
 } from "discord.js";
 
 export default function (
   data: VipMember | Optional<APIVipMember>,
-  interaction: StringSelectMenuInteraction | ButtonInteraction
+  event: StringSelectMenuInteraction | ButtonInteraction | Message
 ) {
-  const member = interaction.member as GuildMember;
-  const memberRole = interaction.guild.roles.cache.get(data.roleId);
-  const memberChannel = interaction.guild.channels.cache.get(data.voiceChannelId) as VoiceChannel;
+  const member = event.member as GuildMember;
+  const memberRole = event.guild.roles.cache.get(data.roleId);
+  const memberChannel = event.guild.channels.cache.get(data.voiceChannelId) as VoiceChannel;
+  const typeMap: Record<string, string> = {
+    both: "Call & Cargo",
+    channel: "Call",
+    role: "Cargo",
+  };
   return new EmbedBuilder()
     .setColor(member.displayHexColor)
     .setTitle(`Informações | ${member.user.username}`)
@@ -22,29 +29,29 @@ export default function (
     .setFields([
       {
         name: "Tipo",
-        value: data.type || "Call & Cargo",
+        value: `${typeMap[data.type]} | ${data.type}` || "Call & Cargo | Both",
         inline: true,
       },
       {
-        name: "Cargo",
-        value: memberRole?.toString() ?? `Cargo não encontrado`,
+        name: "Cargo | Role",
+        value: memberRole?.toString() ?? `Cargo não encontrado | Role not found`,
         inline: true,
       },
       {
-        name: "Call",
-        value: memberChannel?.toString() ?? `Canal não encontrado`,
+        name: "Call | Channel",
+        value: memberChannel?.toString() ?? `Canal não encontrado | Channel not found`,
         inline: true,
       },
 
       {
-        name: "Criado em:",
+        name: "Criado em | Created At",
         value: data.createdAt
           ? `<t:${Math.ceil(data.createdAt.getTime() / 1000)}:R>`
           : `<t:${Math.ceil(Date.now() / 1000)}:R>`,
         inline: true,
       },
       {
-        name: "Expiração em:",
+        name: "Expiração em | Expires in",
         value: data.duration
           ? `<t:${Math.ceil(data.duration.getTime() / 1000)}:R>`
           : `<t:${Math.ceil(Date.now() / 1000)}:R>`,
@@ -52,13 +59,21 @@ export default function (
       },
 
       {
-        name: "Membros adicionados:",
+        name: "Membros adicionados | Added members",
         value:
-          memberRole?.members?.map((m) => m.toString()).join(", ") ??
-          memberChannel?.members?.map((m) => m.toString()).join(", ") ??
-          "Sem membros adicionados",
+          memberRole?.members
+            ?.toJSON()
+            .slice(0, 15)
+            .map((m) => m.toString())
+            .join(", ") ??
+          memberChannel?.members
+            ?.toJSON()
+            .slice(0, 15)
+            .map((m) => m.toString())
+            .join(", ") ??
+          "Sem membros adicionados | No added members",
         inline: true,
       },
     ])
-    .setThumbnail(interaction.user.displayAvatarURL());
+    .setThumbnail((event.member.user as User).displayAvatarURL());
 }

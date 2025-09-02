@@ -7,24 +7,35 @@ const event: Event = {
   once: true,
   async execute(client: Bot) {
     client.user.setActivity({
-      name: "Powered by 🎮",
+      name: "Powered by INFINITY ZONE",
       type: ActivityType.Playing,
     });
+    console.log(`O bot está on! Com o nome ${client.user.username} e com ${client.guilds.cache.size} guildas.`);
+    client.guilds.cache.map((g) =>
+      console.log(`I am in: ${g.name}, has ${g.memberCount} membros.`, `Guild id is: ${g.id}`)
+    );
+
+    let checkingTime = 5 * 60 * 60 * 1000;
+    const guild = client.guilds.cache.get("1336809872884371587");
+    const apiGuild = client.api.guilds.cache.get("1336809872884371587");
 
     setInterval(() => {
-      if (client.user.presence.activities[0].name == "Powered by 🎮") {
-        client.user.setActivity({
-          name: "Powered by INFINITY ZONE",
-          type: ActivityType.Playing,
-        });
-      } else {
-        client.user.setActivity({
-          name: "Powered by 🎮",
-          type: ActivityType.Playing,
+      const expiredVips = apiGuild.vipMembers.cache.filter((m) => {
+        const hasVipExpired = m.duration.getTime() < Date.now();
+        console.log({ hasVipExpired });
+        return hasVipExpired;
+      });
+      if (expiredVips.size !== 0) {
+        expiredVips.map((member) => {
+          const memberRole = guild.roles.cache.get(member.roleId);
+          const memberChannel = guild.roles.cache.get(member.voiceChannelId);
+          if (memberRole) memberRole.delete();
+          if (memberChannel) memberChannel.delete();
+
+          member.update({ status: "off" });
         });
       }
-    }, 60 * 1000);
-    console.log(`O bot está on! Com o nome ${client.user.username} e com ${client.guilds.cache.size} guildas.`);
+    }, checkingTime);
   },
 };
 

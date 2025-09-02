@@ -1,4 +1,4 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 import { Bot } from "../../structures/Client";
 import Embeds from "../../structures/Embeds";
 import { vipPanel } from "../../utils/panels/vipPanel";
@@ -6,7 +6,7 @@ import { vipPanel } from "../../utils/panels/vipPanel";
 export default {
   adminOnly: true,
   data: new SlashCommandBuilder().setName("vip").setDescription("Painel de vip"),
-  async execute(client: Bot, interaction: CommandInteraction) {
+  async execute(client: Bot, interaction: ChatInputCommandInteraction) {
     try {
       const { embed, row } = vipPanel(interaction.guild);
       if (interaction.channel.isSendable()) {
@@ -22,11 +22,9 @@ export default {
         });
       }
     } catch (error) {
-      console.error(error);
       if (interaction.deferred || interaction.replied) interaction.editReply({ embeds: [Embeds.error_occured] });
       else interaction.reply({ embeds: [Embeds.error_occured], flags: 64 });
-
-      return;
+      return console.error(error);
     }
   },
 };

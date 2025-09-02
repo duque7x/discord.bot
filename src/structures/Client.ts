@@ -8,12 +8,14 @@ import { SlashCommand } from "../types/SlashCommand";
 import { PrefixCommand } from "../types/PrefixCommand";
 import { Event } from "../types/Event";
 import { REST as DuqueRest } from "@duque.edits/sdk";
+import { Duration } from "../types/Duration";
 
 export class Bot extends Client {
   public slashCommands: Collection<string, SlashCommand>;
   public prefixCommands: Collection<string, PrefixCommand>; // Define properly if needed
   public api: DuqueRest;
-
+  durationMap: Duration[];
+  
   constructor(options: ClientOptions) {
     super(options);
 
@@ -22,6 +24,13 @@ export class Bot extends Client {
     this.api = new DuqueRest();
     this.api.setKey("877598927149490186");
     this.handleProcessErrors();
+
+    this.durationMap = [
+      { alias: ["d", "days", "dias"], multiplier: 24 * 60 * 60 },
+      { alias: ["h", "horas"], multiplier: 60 * 60 },
+      { alias: ["min", "m", "minutos"], multiplier: 60 },
+      { alias: ["s", "sec", "segundos"], multiplier: 1 },
+    ];
   }
 
   async loadCommands() {
@@ -90,5 +99,27 @@ export class Bot extends Client {
     process.on("uncaughtException", (error) => {
       console.error("Uncaught exception:", error);
     });
+  }
+  resolveDuration(dur: string) {
+    if (!dur) return;
+
+    const reg = /^(\d+)(\D.*)?$/;
+    const matches = dur.match(reg);
+    const value = matches ? Number(matches[1]) : 1;
+    const unit = matches?.[2]?.toLowerCase() ?? "d";
+
+    const durMap = [
+      { alias: ["d", "days", "dias"], multiplier: 24 * 60 * 60 },
+      { alias: ["h", "horas"], multiplier: 60 * 60 },
+      { alias: ["min", "m", "minutos"], multiplier: 60 },
+      { alias: ["s", "sec", "segundos"], multiplier: 1 },
+    ];
+
+    const duration = durMap.find((d) => d.alias.includes(unit))?.multiplier ?? 24 * 60 * 60;
+    return value * duration;
+  }
+
+  secondsToDays(sec: number) {
+    return sec / 60 / 60 / 24;
   }
 }

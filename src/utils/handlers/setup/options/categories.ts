@@ -100,7 +100,7 @@ export default async function (guildApi: rest.Guild, interaction: StringSelectMe
         .setDescription(
           [
             `Use a seleção para adicionar ou remover umas das categorias ${translateField[value]}`,
-            "-# ↪ Você tem **2 minutos**!",
+            "-# <:seta:1412704526879948924> Você tem **2 minutos**!",
           ].join("\n")
         );
 
@@ -110,12 +110,12 @@ export default async function (guildApi: rest.Guild, interaction: StringSelectMe
           .addOptions(
             new StringSelectMenuOptionBuilder()
               .setValue(`add-${value}`)
-              .setEmoji("<:add:1387526168349245502>")
+              .setEmoji("<:add_green:1409964526132269226>")
               .setLabel("Adicionar uma categoria")
               .setDescription(`Clique para adicionar uma categoria específica`),
             new StringSelectMenuOptionBuilder()
               .setValue(`remove-${value}`)
-              .setEmoji("<:remove:1387526179732459642>")
+              .setEmoji("<:remove_red:1410964873055174738>")
               .setLabel("Remover uma categoria")
               .setDescription(`Clique para remover uma categoria específica`)
           )
@@ -148,7 +148,7 @@ export default async function (guildApi: rest.Guild, interaction: StringSelectMe
           baseEmbed
             .setTitle(`Categoria ${translateField[categoryType]}`)
             .setColor(0xff8a00)
-            .setDescription(["Use a seleção para adicionar uma categoria:", "-# ↪ Você tem **2 minutos**!"].join("\n"));
+            .setDescription(["Use a seleção para adicionar uma categoria:", "-# <:seta:1412704526879948924> Você tem **2 minutos**!"].join("\n"));
 
           const editedReply = await i.editReply({ embeds: [baseEmbed], components: [channelSelect] });
 
@@ -175,7 +175,7 @@ export default async function (guildApi: rest.Guild, interaction: StringSelectMe
           baseEmbed
             .setTitle(`Categoria ${translateField[categoryType]}`)
             .setColor(0x713d00)
-            .setDescription(["Use a seleção para remover uma categoria:", "-# ↪ Você tem **2 minutos**!"].join("\n"));
+            .setDescription(["Use a seleção para remover uma categoria:", "-# <:seta:1412704526879948924> Você tem **2 minutos**!"].join("\n"));
           const channelSelect = new ActionRowBuilder<ChannelSelectMenuBuilder>().setComponents(
             new ChannelSelectMenuBuilder()
               .setCustomId(`channelselect-${vl}`)

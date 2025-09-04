@@ -60,7 +60,7 @@ export default function (
 
       {
         name: "Membros adicionados | Added members",
-        value:
+        value: `Membros com cargo (${memberRole?.members.size ?? memberChannel.members.size ?? 0}) \n${
           memberRole?.members
             ?.toJSON()
             .slice(0, 15)
@@ -71,7 +71,8 @@ export default function (
             .slice(0, 15)
             .map((m) => m.toString())
             .join(", ") ??
-          "Sem membros adicionados | No added members",
+          "Sem membros adicionados (0) | No added members (0)"
+        }`,
         inline: true,
       },
     ])

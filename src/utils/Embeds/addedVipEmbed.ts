@@ -7,9 +7,9 @@ export default function (duration_in_days: number, member: GuildMember, vip_type
       [
         `Vip foi adicionado a ${member} com sucesso.`,
         duration_in_days < 364
-          ? `-# ↪ Duração adicionada: **${duration_in_days} dias.**`
-          : `-# ↪ Duração adicionada: **${Math.floor(duration_in_days / 364)} ano(s).**`,
-        `-# ↪ Tipo adicionado: **${vip_type}.**`,
+          ? `-# <:seta:1412704526879948924> Duração adicionada: **${duration_in_days} dias.**`
+          : `-# <:seta:1412704526879948924> Duração adicionada: **${Math.floor(duration_in_days / 364)} ano(s).**`,
+        `-# <:seta:1412704526879948924> Tipo adicionado: **${vip_type}.**`,
       ].join("\n")
     )
     .setTimestamp()

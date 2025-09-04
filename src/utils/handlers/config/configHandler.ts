@@ -28,8 +28,8 @@ export default async function (guildApi: rest.Guild, interaction: StringSelectMe
     if (value === "close") {
       await interaction.reply({
         content: [
-          "-# ↪ Canal sendo excluido em alguns segundos...",
-          "-# ↪ This channel will be deleted in a few seconds...",
+          "-# <:seta:1412704526879948924> Canal sendo excluido em alguns segundos...",
+          "-# <:seta:1412704526879948924> This channel will be deleted in a few seconds...",
         ].join("\n"),
         flags: 64,
       });

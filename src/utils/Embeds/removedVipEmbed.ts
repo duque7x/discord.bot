@@ -8,9 +8,9 @@ export default function (duration_in_days: number, member: GuildMember, resting_
           [
             `Redução em ${member} realizada com sucesso.`,
             duration_in_days < 364
-              ? `-# ↪ Duração reduzida: **${duration_in_days} dias.**`
-              : `-# ↪ Duração reduzida: **${Math.floor(duration_in_days / 364)} ano(s).**`,
-            `-# ↪ Duração restante: **${Math.floor(resting_duration_in_days / 364)} ano(s).**`,
+              ? `-# <:seta:1412704526879948924> Duração reduzida: **${duration_in_days} dias.**`
+              : `-# <:seta:1412704526879948924> Duração reduzida: **${Math.floor(duration_in_days / 364)} ano(s).**`,
+            `-# <:seta:1412704526879948924> Duração restante: **${Math.floor(resting_duration_in_days / 364)} ano(s).**`,
           ].join("\n")
         )
         .setTimestamp()
@@ -18,7 +18,7 @@ export default function (duration_in_days: number, member: GuildMember, resting_
         .setThumbnail(member.user.displayAvatarURL())
     : new EmbedBuilder()
         .setTitle(`<:yes_red:1409964517307453631> Vip Removido | Vip Removed`)
-        .setDescription([`Vip foi removido a ${member} com sucesso.`, `-# ↪ Duração restante: **0 horas.**`].join("\n"))
+        .setDescription([`Vip foi removido a ${member} com sucesso.`, `-# <:seta:1412704526879948924> Duração restante: **0 horas.**`].join("\n"))
         .setTimestamp()
         .setColor(0xff0000)
         .setThumbnail(member.user.displayAvatarURL());

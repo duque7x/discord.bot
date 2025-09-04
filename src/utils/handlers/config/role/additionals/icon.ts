@@ -7,8 +7,8 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
     if (interaction.guild.premiumTier !== 3) {
       return interaction.reply({
         content: [
-          `-# ↪ Servidor não tem o nível de booster necessário.`,
-          `-# ↪ Server does not have the minimum boost level.`,
+          `-# <:seta:1412704526879948924> Servidor não tem o nível de booster necessário.`,
+          `-# <:seta:1412704526879948924> Server does not have the minimum boost level.`,
         ].join("\n"),
         flags: 64,
       });
@@ -16,10 +16,10 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
     const reply = await interaction.reply({
       content: [
         `Envie o icone do seu cargo abaixo.`,
-        `-# ↪ Envie como imagem!`,
+        `-# <:seta:1412704526879948924> Envie como imagem!`,
         ``,
         `Send the icon for your role bellow.`,
-        `-# ↪ Send as a image!`,
+        `-# <:seta:1412704526879948924> Send as a image!`,
       ].join("\n"),
       withResponse: true,
     });
@@ -33,7 +33,7 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
       if (msg.attachments.size === 0) {
         msg.delete();
         reply.resource.message.edit(
-          [`-# ↪ Você deve enviar uma imagem.`, `-# ↪ You must send an attachement.`].join("\n")
+          [`-# <:seta:1412704526879948924> Você deve enviar uma imagem.`, `-# <:seta:1412704526879948924> You must send an attachement.`].join("\n")
         );
         return;
       }
@@ -47,10 +47,10 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
         reply.resource.message.edit(
           [
             `<:yes_green:1410952174544093204> \`|\` Icone alterado com sucesso!`,
-            `-# ↪ Para alterá-lo novamente selecione um espaço vazio e selecione 'Icone' novamente.`,
+            `-# <:seta:1412704526879948924> Para alterá-lo novamente selecione um espaço vazio e selecione 'Icone' novamente.`,
             ``,
             `<:yes_green:1410952174544093204> \`|\` Role's icon was changed!`,
-            `-# ↪ To change it again, select an open space then select option 'Icon' again.`,
+            `-# <:seta:1412704526879948924> To change it again, select an open space then select option 'Icon' again.`,
           ].join("\n")
         ),
       ]);

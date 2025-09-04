@@ -80,10 +80,10 @@ export default async function (
       await int.reply({
         content: [
           `Selecione os jogadores para os ${map[action]}.`,
-          `-# ↪ Lembre-se do limite de jogadores.`,
+          `-# <:seta:1412704526879948924> Lembre-se do limite de jogadores.`,
           ``,
           `Select the players to ${action} them.`,
-          `-# ↪ Rembember the max players.`,
+          `-# <:seta:1412704526879948924> Rembember the max players.`,
         ].join("\n"),
         components: [row],
         flags: 64,
@@ -98,7 +98,7 @@ export default async function (
       });
       collector2.on("collect", async (i) => {
         await i.reply({
-          content: [`-# ↪ Aguarde um momento...`, `-# ↪ Wait for a few moments...`].join("\n"),
+          content: [`-# <:seta:1412704526879948924> Aguarde um momento...`, `-# <:seta:1412704526879948924> Wait for a few moments...`].join("\n"),
           flags: 64,
         });
         const users = i.values;
@@ -121,10 +121,10 @@ export default async function (
           await i.editReply({
             content: [
               `Jogadores adicionados com sucesso.`,
-              `-# ↪ Para os remover clique em 'Remover'.`,
+              `-# <:seta:1412704526879948924> Para os remover clique em 'Remover'.`,
               ``,
               `Players were added successfully.`,
-              `-# ↪ To remove them click 'Remove'.`,
+              `-# <:seta:1412704526879948924> To remove them click 'Remove'.`,
             ].join("\n"),
           });
 
@@ -148,10 +148,10 @@ export default async function (
             await i.editReply({
               content: [
                 `Jogadores removided com sucesso.`,
-                `-# ↪ Para os adicionar clique em 'Adicionar'.`,
+                `-# <:seta:1412704526879948924> Para os adicionar clique em 'Adicionar'.`,
                 ``,
                 `Players were removed successfully.`,
-                `-# ↪ To add them back click 'Add'.`,
+                `-# <:seta:1412704526879948924> To add them back click 'Add'.`,
               ].join("\n"),
             });
           }

@@ -3,6 +3,7 @@ import { StringSelectMenuInteraction } from "discord.js";
 import { Bot } from "../../../structures/Client";
 import Embeds from "../../../structures/Embeds";
 import categories from "./options/categories";
+import { permissions } from "./options/permissions";
 
 export default async function (
   guildApi: rest.Guild,
@@ -14,7 +15,7 @@ export default async function (
     const handlers: Record<
       string,
       (guildApi: rest.Guild, interaction: StringSelectMenuInteraction, client: Bot) => any
-    > = { categories };
+    > = { categories, permissions };
     if (value.startsWith("separator")) return interaction.deferUpdate();
     const handler = handlers[value];
     if (handler) return handler(guildApi, interaction, client);

@@ -24,10 +24,10 @@ export default {
   ].join("\n"),
   type_not_allowed_vip: [
     `<:no_red:1409964586253291732> \`|\` Tipo de vip **não aceite**!`,
-    "-# ↪ Disponiveis: both (cargo e canal), role (cargo), channel (canal)",
+    "-# <:seta:1412704526879948924> Disponiveis: both (cargo e canal), role (cargo), channel (canal)",
   ].join("\n"),
-  error_occurs: `-# ↪ Se ocorrer um erro, entre em contacto a administração do servidor.`,
-  en_error_occurs: `-# ↪ If there is an error, please report it to the admins of the server.`,
+  error_occurs: `-# <:seta:1412704526879948924> Se ocorrer um erro, entre em contacto a administração do servidor.`,
+  en_error_occurs: `-# <:seta:1412704526879948924> If there is an error, please report it to the admins of the server.`,
 
   must_create_role_first: [
     `Você deve criar **o seu cargo** primeiro antes de criar o seu canal de voz!`,
@@ -35,12 +35,12 @@ export default {
   ].join("\n"),
 
   must_create_vip: [
-    `-# ↪ Você deve criar **o seu cargo** ou o **seu canal** primeiro antes de exucutar esta ação!`,
-    `-# ↪ You must create **your role** or **your channel** before doing this!`,
+    `-# <:seta:1412704526879948924> Você deve criar **o seu cargo** ou o **seu canal** primeiro antes de exucutar esta ação!`,
+    `-# <:seta:1412704526879948924> You must create **your role** or **your channel** before doing this!`,
   ].join("\n"),
 
   must_be_voice: [
-    `-# ↪ O canal selecionado deve ser um canal de voz.`,
-    `-# ↪ The selected channel must be a voice channel.`,
+    `-# <:seta:1412704526879948924> O canal selecionado deve ser um canal de voz.`,
+    `-# <:seta:1412704526879948924> The selected channel must be a voice channel.`,
   ].join("\n"),
 };

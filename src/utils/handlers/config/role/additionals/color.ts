@@ -39,7 +39,7 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
     });
     collector.on("collect", async (int) => {
       if (int.isButton()) {
-        await int.reply(["-# ↪ Envie o código hexadecimal abaixo:", "-# ↪ Send the hex code below:"].join("\n"));
+        await int.reply(["-# <:seta:1412704526879948924> Envie o código hexadecimal abaixo:", "-# <:seta:1412704526879948924> Send the hex code below:"].join("\n"));
         const msgCollector = int.channel.createMessageCollector({
           filter: (m) => m.author.id === int.user.id,
           max: 1,
@@ -53,10 +53,10 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
               message.channel.send(
                 [
                   `${message.author} Código hexadecimal não valido!`,
-                  `-# ↪ Veja este website para pegar codigos hexadecimais: <https://htmlcolorcodes.com>.`,
+                  `-# <:seta:1412704526879948924> Veja este website para pegar codigos hexadecimais: <https://htmlcolorcodes.com>.`,
                   ``,
                   `${message.author} Hex code not valid!`,
-                  `-# ↪ Check this website to get some codes: <https://htmlcolorcodes.com>.`,
+                  `-# <:seta:1412704526879948924> Check this website to get some codes: <https://htmlcolorcodes.com>.`,
                 ].join("\n")
               );
               msgCollector.stop();
@@ -76,10 +76,10 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
             return reply.edit({
               content: [
                 `${message.author} Cor alterada com sucesso!`,
-                `-# ↪ Veja a pré-visualização abaixo.`,
+                `-# <:seta:1412704526879948924> Veja a pré-visualização abaixo.`,
                 ``,
                 `${message.author} Color changed!`,
-                `-# ↪ See the preview below.`,
+                `-# <:seta:1412704526879948924> See the preview below.`,
               ].join("\n"),
               files: [attachment],
             });
@@ -89,7 +89,7 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
       if (int.isStringSelectMenu()) {
         const hexCode = int.values[0] as `#${string}`;
         await Promise.all([
-          int.reply([`-# ↪ Setando cor...`, `-# ↪ Setting color...`].join("\n")),
+          int.reply([`-# <:seta:1412704526879948924> Setando cor...`, `-# <:seta:1412704526879948924> Setting color...`].join("\n")),
           vipmemberRole.setColors({
             primaryColor: hexCode as `#${string}`,
           }),
@@ -102,10 +102,10 @@ export default async function (interaction: StringSelectMenuInteraction, vipmemb
         reply.edit({
           content: [
             `${int.user} Cor alterada com sucesso!`,
-            `-# ↪ Veja a pré-visualização abaixo.`,
+            `-# <:seta:1412704526879948924> Veja a pré-visualização abaixo.`,
             ``,
             `${int.user} Color changed!`,
-            `-# ↪ See the preview below.`,
+            `-# <:seta:1412704526879948924> See the preview below.`,
           ].join("\n"),
           files: [attachment],
         });

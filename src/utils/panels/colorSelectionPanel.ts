@@ -37,10 +37,10 @@ export default function () {
     .setDescription(
       [
         `Selecione uma cor abaixo.`,
-        `-# ↪ Você também pode usar uma cor personalizada (código hexadecimal).`,
+        `-# <:seta:1412704526879948924> Você também pode usar uma cor personalizada (código hexadecimal).`,
         ``,
         `Select a color below.`,
-        `-# ↪ You can also use a custom color (hex code).`,
+        `-# <:seta:1412704526879948924> You can also use a custom color (hex code).`,
       ].join("\n")
     );
   const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(

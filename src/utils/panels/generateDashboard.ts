@@ -13,7 +13,7 @@ export default function generateDashboard() {
     .setDescription(
       [
         `Abaixo, você encontrará um menu para ajustar as configurações do bot.`,
-        `-# ↪ Se tiveres uma dúvida chame a equipa de suporte.`,
+        `-# <:seta:1412704526879948924> Se tiveres uma dúvida chame a equipa de suporte.`,
       ].join("\n")
     )
     .setTimestamp();
@@ -26,7 +26,12 @@ export default function generateDashboard() {
           .setLabel("Categorias")
           .setValue("categories")
           .setDescription("Definir as categorias usadas pelo bot.")
-          .setEmoji("<:channel_emoji_red:1409964549058199683>")
+          .setEmoji("<:channel_emoji_red:1409964549058199683>"),
+        new StringSelectMenuOptionBuilder()
+          .setLabel("Permissões")
+          .setValue("permissions")
+          .setDescription("Configure as permissões de usuários.")
+          .setEmoji("<:manage_blue:1409964545644040202>")
       )
   );
   return { embed, row };

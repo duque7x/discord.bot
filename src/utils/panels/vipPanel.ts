@@ -20,8 +20,8 @@ export function vipPanel(guild: Guild) {
         "-# Options such as information of vip, create private role or channel and configuration of the members.",
       ].join("\n")
     )
-    .setThumbnail(guild.iconURL({ extension: "jpg", size: 512 }));
-
+    .setThumbnail(process.env.ICONURL);
+process.env.ICONURL
   const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
     new StringSelectMenuBuilder()
       .setCustomId(`vip_painel`)

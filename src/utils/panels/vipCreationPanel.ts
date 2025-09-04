@@ -15,7 +15,7 @@ export default function (vipMember: VipMember, interaction: StringSelectMenuInte
       ].join("\n")
     )
     .setTimestamp()
-    .setThumbnail(interaction.guild.iconURL())
+    .setThumbnail(process.env.ICONURL)
     .setColor(0x00ff00);
 
   const hasCallAccess = vipMember.type === "both" || vipMember.type === "channel";

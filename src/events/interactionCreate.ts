@@ -18,6 +18,7 @@ import setupHandler from "../utils/handlers/setup/setupHandler";
 import rest from "@duque.edits/sdk";
 import vipPainelHandler from "../utils/handlers/vip_painel/vipPainelHandler";
 import configHandler from "../utils/handlers/config/configHandler";
+import vipmember_viewHandler from "../utils/handlers/vipmemberView/vipmember_viewHandler";
 
 const Reset = "\x1b[0m";
 const FgCyan = "\x1b[36m";
@@ -33,7 +34,7 @@ const event = {
       const guildApi = client.api.guilds.cache.get(interaction.guildId);
 
       const isAdmin = interaction.memberPermissions?.has(PermissionFlagsBits.Administrator);
-      const allowedRoles = guildApi?.roles?.find((r) => r.type == "team")?.ids;
+      const allowedRoles = guildApi?.roles?.find((r) => r.type == "manage_bot")?.ids;
       const hasRole = allowedRoles?.some((r) =>
         (interaction?.member?.roles as GuildMemberRoleManager).cache.some((r2: Role) => r == r2.id)
       );
@@ -87,6 +88,20 @@ const event = {
         if (customId === "vip_painel") return vipPainelHandler(guildApi as rest.Guild, interaction, value, client);
 
         if (action === "config") return configHandler(guildApi, interaction, client);
+      }
+
+      if (interaction.isButton()) {
+        const { customId } = interaction;
+        console.log(
+          FgBlue +
+            `${interaction.user.tag} - ${
+              interaction.user.id
+            } usou o bot as ${new Date().toISOString()}. CustomId: ${customId}` +
+            Reset
+        );
+
+        const [_, action, extra] = customId.split("-");
+        if (_ === "vipmember_view") return vipmember_viewHandler(client, guildApi, interaction);
       }
     } catch (error) {
       console.error(error);

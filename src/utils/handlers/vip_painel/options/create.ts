@@ -60,7 +60,7 @@ export default async function (
         const embed = new EmbedBuilder()
           .setTitle("Configurar Cargo | Configure Cargo")
           .setColor(Colors.Aqua)
-          .setThumbnail(int.guild.iconURL())
+          .setThumbnail(process.env.ICONURL)
           .setDescription(
             [
               `Usa a seleção abaixo para configurar o teu cargo.`,
@@ -76,7 +76,7 @@ export default async function (
         const embed = new EmbedBuilder()
           .setTitle("Configurar Canal | Configure Channel")
           .setColor(Colors.Purple)
-          .setThumbnail(int.guild.iconURL())
+          .setThumbnail(process.env.ICONURL)
           .setDescription(
             [
               `Usa a seleção abaixo para configurar o teu canal.`,
